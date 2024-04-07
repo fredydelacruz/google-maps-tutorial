@@ -53,6 +53,19 @@ export default function GoogleMaps() {
         initializeMap();
     }, []);
 
+    navigator.geolocation.getCurrentPosition(
+    async (position) => {
+        // El resto de tu código aquí...
+    },
+    (error) => {
+        console.error("Error obteniendo la ubicación", error);
+        // Aquí puedes manejar el error como mejor te parezca, por ejemplo mostrando un mensaje al usuario.
+    },
+    {
+        timeout: 5000, // Tiempo de espera antes de que la solicitud de ubicación falle
+    }
+);
+
     return (
         <div>
             <div className="h-[230px] w-[230px]" ref={mapRef} />
