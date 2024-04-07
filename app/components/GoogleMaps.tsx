@@ -26,7 +26,7 @@ export default function GoogleMaps() {
                         };
 
                         // Convertir las coordenadas a string y guardarlas en el estado
-                        setLocationString(JSON.stringify(locationInMap));
+                        setLocationString(`${position.coords.latitude}, ${position.coords.longitude}`);
 
                         // MARKER
                         // Aquí deberías usar google.maps.marker.AdvancedMarkerElement en lugar de google.maps.Marker
@@ -40,6 +40,9 @@ export default function GoogleMaps() {
                             center: locationInMap,
                             zoom: 15,
                             mapId: 'NEXT_MAPS_TUTS',
+                            mapTypeControl: false, // Desactiva el control de tipo de mapa (Satélite/Mapa)
+                            streetViewControl: false, // Desactiva el control de Street View
+                            fullscreenControl: false, // Desactiva el control de pantalla completa
                         };
 
                         const map = new Map(mapRef.current as HTMLDivElement, options);
@@ -67,7 +70,6 @@ export default function GoogleMaps() {
     return (
         <div>
             <div className="h-[300px] w-[300px]" ref={mapRef} />
-            <p className="text-[10px]">Ubicación actual: {locationString}</p>
         </div>
     );
 }
