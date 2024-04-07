@@ -66,7 +66,7 @@ export default function GoogleMaps() {
 
     return (
         <div>
-            <div className="h-[230px] w-[230px]" ref={mapRef} />
+            <div className="h-[300px] w-[300px]" ref={mapRef} />
             <p className="text-[10px]">Ubicación actual: {locationString}</p>
         </div>
     );
