@@ -51,6 +51,7 @@ export default function GoogleMaps() {
                         const marker = new Marker({
                             map: map,
                             position: locationInMap,
+                            draggable: true, // Permite que el marcador sea movible
                         });
                     },
                     (error) => {
