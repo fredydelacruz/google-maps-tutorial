@@ -1,47 +1,59 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 
 export default function GoogleMaps() {
-	const mapRef = React.useRef<HTMLDivElement>(null);
+    const mapRef = React.useRef<HTMLDivElement>(null);
+    const [locationString, setLocationString] = useState<string>('');
 
-	useEffect(() => {
-		const initializeMap = async () => {
-			const loader = new Loader({
-				apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY as string,
-				version: 'quartely',
-			});
+    useEffect(() => {
+        const initializeMap = async () => {
+            const loader = new Loader({
+                apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY as string,
+                version: 'quartely',
+            });
 
-			const { Map } = await loader.importLibrary('maps');
+            const { Map } = await loader.importLibrary('maps');
 
-			const locationInMap = {
-				lat: 39.60128890889341,
-				lng: -9.069839810859907,
-			};
+            // Obtener la ubicación actual del usuario
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const locationInMap = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
 
-			// MARKER
-			const { Marker } = (await loader.importLibrary(
-				'marker'
-			)) as google.maps.MarkerLibrary;
+                // Convertir las coordenadas a string y guardarlas en el estado
+                setLocationString(JSON.stringify(locationInMap));
 
-			const options: google.maps.MapOptions = {
-				center: locationInMap,
-				zoom: 15,
-				mapId: 'NEXT_MAPS_TUTS',
-			};
+                // MARKER
+                const { Marker } = (await loader.importLibrary(
+                    'marker'
+                )) as google.maps.MarkerLibrary;
 
-			const map = new Map(mapRef.current as HTMLDivElement, options);
+                const options: google.maps.MapOptions = {
+                    center: locationInMap,
+                    zoom: 15,
+                    mapId: 'NEXT_MAPS_TUTS',
+                };
 
-			// add the marker in the map
-			const marker = new Marker({
-				map: map,
-				position: locationInMap,
-			});
-		};
+                const map = new Map(mapRef.current as HTMLDivElement, options);
 
-		initializeMap();
-	}, []);
+                // add the marker in the map
+                const marker = new Marker({
+                    map: map,
+                    position: locationInMap,
+                });
+            });
+        };
 
-	return <div className="h-[600px]" ref={mapRef} />;
+        initializeMap();
+    }, []);
+
+    return (
+        <div>
+            <div className="h-[600px]" ref={mapRef} />
+            <p>Ubicación actual: {locationString}</p>
+        </div>
+    );
 }
