@@ -28,6 +28,8 @@ export default function GoogleMaps() {
                         // Convertir las coordenadas a string y guardarlas en el estado
                         setLocationString(`${position.coords.latitude}, ${position.coords.longitude}`);
 
+                        
+
                         // MARKER
                         // Aquí deberías usar google.maps.marker.AdvancedMarkerElement en lugar de google.maps.Marker
                         // Pero como AdvancedMarkerElement no está disponible en la biblioteca de tipos @types/googlemaps,
@@ -65,6 +67,14 @@ export default function GoogleMaps() {
                             strokeOpacity: 0.8,
                             strokeWeight: 2,
                         });
+
+                        // Actualizar la posición del marcador
+                        marker.setPosition(locationInMap);
+
+                        // Actualizar la posición y el radio del círculo
+                        circle.setCenter(locationInMap);
+                        circle.setRadius(position.coords.accuracy);
+                    
                     },
                     (error) => {
                         console.error("Error obteniendo la ubicación", error);
