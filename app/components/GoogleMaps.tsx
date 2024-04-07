@@ -53,6 +53,18 @@ export default function GoogleMaps() {
                             position: locationInMap,
                             draggable: true, // Permite que el marcador sea movible
                         });
+
+                        // add the circle in the map
+                        const circle = new google.maps.Circle({
+                            map: map,
+                            center: locationInMap,
+                            radius: position.coords.accuracy, // El radio del círculo representa la precisión de la ubicación
+                            fillColor: '#73AD21',
+                            fillOpacity: 0.6,
+                            strokeColor: '#FFFFFF',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                        });
                     },
                     (error) => {
                         console.error("Error obteniendo la ubicación", error);
