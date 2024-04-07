@@ -11,7 +11,7 @@ export default function GoogleMaps() {
         const initializeMap = async () => {
             const loader = new Loader({
                 apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY as string,
-                version: 'quartely',
+                version: 'quarterly', // Corregido aquí
             });
 
             const { Map } = await loader.importLibrary('maps');
@@ -27,6 +27,9 @@ export default function GoogleMaps() {
                 setLocationString(JSON.stringify(locationInMap));
 
                 // MARKER
+                // Aquí deberías usar google.maps.marker.AdvancedMarkerElement en lugar de google.maps.Marker
+                // Pero como AdvancedMarkerElement no está disponible en la biblioteca de tipos @types/googlemaps,
+                // seguiré usando google.maps.Marker aquí. Deberías considerar migrar a AdvancedMarkerElement cuando esté disponible.
                 const { Marker } = (await loader.importLibrary(
                     'marker'
                 )) as google.maps.MarkerLibrary;
@@ -52,8 +55,8 @@ export default function GoogleMaps() {
 
     return (
         <div>
-            <div className="h-[600px]" ref={mapRef} />
-            <p>Ubicación actual: {locationString}</p>
+            <div className="h-[230px] w-[230px]" ref={mapRef} />
+            <p className="text-[10px]">Ubicación actual: {locationString}</p>
         </div>
     );
 }
