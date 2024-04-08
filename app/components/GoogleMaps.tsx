@@ -53,7 +53,7 @@ export default function GoogleMaps() {
                         const marker = new Marker({
                             map: map,
                             position: locationInMap,
-                            draggable: true, // Permite que el marcador sea movible
+                            draggable: false, // Permite que el marcador sea movible
                         });
 
                         // add the circle in the map
